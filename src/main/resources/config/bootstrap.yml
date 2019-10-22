@@ -1,0 +1,18 @@
+# ===================================================================
+# Spring Cloud Config bootstrap configuration for the "dev" profile
+# In prod profile, properties will be overwritten by the ones defined in bootstrap-prod.yml
+# ===================================================================
+
+spring:
+    application:
+        name: demo-lorenzo
+    cloud:
+        consul:
+            host: ${CONSUL_HOST}
+            port: ${CONSUL_PORT}
+            discovery:
+                tags:
+                    - traefik.frontend.rule=PathPrefixStrip:/${PATH_PREFIX}
+                    - traefik.enable=true
+                instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+                service-name: demo-consul-${spring.application.name}
